@@ -1,5 +1,6 @@
 # Minesweeper
- A Minesweeper game, made in Rust and Macroquad in 2 days
+ A Minesweeper game, made in Rust and Macroquad in 2 days!<br>
+ You can play it online here: https://eboatwright.itch.io/minesweeper-rs
 
 # Disclaimer!
  This was not meant as an optimized, or organized project! It was made in 2 days, and the code is *very messy!*
