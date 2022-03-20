@@ -160,7 +160,7 @@ async fn main() {
 						}
 
 						if is_mouse_button_pressed(MouseButton::Left) {
-							let (x, y) = get_mouse_pos(&viewport, half_board_width, tile_size);
+							let (x, y) = get_mouse_pos(&viewport, half_board_width, tile_size, board_size);
 							if !flags[y][x] {
 								if mines[y][x] {
 									game_state = GameState::GameOver { won: false };
@@ -187,7 +187,7 @@ async fn main() {
 						}
 
 						if is_mouse_button_pressed(MouseButton::Right) {
-							let (x, y) = get_mouse_pos(&viewport, half_board_width, tile_size);
+							let (x, y) = get_mouse_pos(&viewport, half_board_width, tile_size, board_size);
 							if board[y][x] == -1 {
 								flags[y][x] = !flags[y][x];
 								play_sound(flag_sfx, PlaySoundParams { looped: false, volume: 1.0 });
@@ -323,11 +323,11 @@ fn draw(spritesheet_tex: Texture2D, x: usize, y: usize, src: f32, half_board_wid
 	);
 }
 
-fn get_mouse_pos(viewport: &Viewport, half_board_width: f32, tile_size: f32) -> (usize, usize) {
+fn get_mouse_pos(viewport: &Viewport, half_board_width: f32, tile_size: f32, board_size: usize) -> (usize, usize) {
 	let mouse_pos = viewport.mouse_position();
 	let x = ((half_board_width + mouse_pos[0]) / tile_size).floor() as usize;
 	let y = ((half_board_width + mouse_pos[1]) / tile_size).floor() as usize;
-	return (x, y);
+	return (clamp(x, 0, board_size - 1), clamp(y, 0, board_size - 1));
 }
 
 fn generate(board: &mut Vec<Vec<i32>>, mines: &mut Vec<Vec<bool>>, flags: &mut Vec<Vec<bool>>, board_size: usize) {
